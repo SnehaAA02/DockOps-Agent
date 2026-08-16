@@ -1,0 +1,33 @@
+[project]
+name = "dockops-agent"
+version = "0.1.0"
+description = "LLM-powered natural-language assistant for managing local Docker containers"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Your Name" }]
+dependencies = [
+    "langchain>=0.3.0",
+    "langchain-ollama>=0.2.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0.0", "ruff>=0.6.0"]
+
+[project.scripts]
+dockops-agent = "dockops_agent.agent:main"
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["dockops_agent*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

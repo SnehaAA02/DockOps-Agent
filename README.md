@@ -18,13 +18,13 @@ model (no data leaves your machine).
 ```
 ## Use-Cases 
 
-- Onboarding / low Docker-fluency teammates
+- Onboarding / low Docker-fluency teammates:
 Junior engineers or non-backend folks (QA, support, PMs poking at a staging environment) who need to check container status but don't know Docker syntax by heart yet.
-- Fast triage during an incident, on a dev/staging box
+- Fast triage during an incident, on a dev/staging box:
 Someone mid-incident, tired, under pressure — typing a fast plain-English question is lower friction than recalling exact flag syntax at 2am.
-- Personal dev-environment hygiene
+- Personal dev-environment hygiene:
 An individual developer's own machine — checking what's eating resources, cleaning up forgotten containers, before starting a fresh dev session.
-- Shared dev-server cleanup helper (needs more guardrails)
+- Shared dev-server cleanup helper (needs more guardrails):
 A team's shared dev/test server accumulates orphaned containers over time — an internal tool anyone on the team can point at it periodically.
 
 
@@ -129,8 +129,8 @@ trusted machine.
 
 .github/workflows/ci.yml runs two jobs on every push to main/master:
 
-- test — lints with ruff, then runs the real Docker integration suite on a fresh runner (see Testing above).
-- publish — only runs if test passes, and only for actual pushes (never for pull requests, so a PR can't publish an image under your name). Builds the Docker image and pushes it to GitHub Container Registry, tagged both latest and with the short git commit SHA for traceability.
+- Test — lints with ruff, then runs the real Docker integration suite on a fresh runner (see Testing above).
+  Publish — only runs if test passes, and only for actual pushes (never for pull requests, so a PR can't publish an image under your name). Builds the Docker image and pushes it to GitHub Container Registry, tagged both latest and with the short git commit SHA for traceability.
 
 ## Design decisions worth knowing for a walkthrough
 

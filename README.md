@@ -16,6 +16,17 @@ model (no data leaves your machine).
  └─────────────┘   tool results   │  shell=True)        │
                                    └────────────────────┘
 ```
+## Use-Cases 
+
+- Onboarding / low Docker-fluency teammates
+Junior engineers or non-backend folks (QA, support, PMs poking at a staging environment) who need to check container status but don't know Docker syntax by heart yet.
+- Fast triage during an incident, on a dev/staging box
+Someone mid-incident, tired, under pressure — typing a fast plain-English question is lower friction than recalling exact flag syntax at 2am.
+- Personal dev-environment hygiene
+An individual developer's own machine — checking what's eating resources, cleaning up forgotten containers, before starting a fresh dev session.
+- Shared dev-server cleanup helper (needs more guardrails)
+A team's shared dev/test server accumulates orphaned containers over time — an internal tool anyone on the team can point at it periodically.
+
 
 ## Features
 
@@ -114,6 +125,13 @@ containers on the host. See the security note in the `Dockerfile` — this
 grants root-equivalent access to the host and should only be done on a
 trusted machine.
 
+## CI/CD pipeline
+
+.github/workflows/ci.yml runs two jobs on every push to main/master:
+
+- test — lints with ruff, then runs the real Docker integration suite on a fresh runner (see Testing above).
+- publish — only runs if test passes, and only for actual pushes (never for pull requests, so a PR can't publish an image under your name). Builds the Docker image and pushes it to GitHub Container Registry, tagged both latest and with the short git commit SHA for traceability.
+
 ## Design decisions worth knowing for a walkthrough
 
 - **Why list-form subprocess args over `shell=True`**: the LLM ultimately
@@ -130,28 +148,14 @@ trusted machine.
   environment variables with defaults, which is what lets this run
   unmodified in a Docker image, CI runner, or teammate's laptop.
 
-## Pushing to GitHub
-
-```bash
-cd dockops-agent
-git init
-git add .
-git commit -m "Initial commit: DockOps Agent"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/dockops-agent.git
-git push -u origin main
-```
-
-Once pushed, check the **Actions** tab on GitHub — the CI workflow will run
-the real Docker integration suite on GitHub's own runners and should pass
-green with no setup required on your end.
 
 ## Possible extensions
 
 - Swap `ChatOllama` for a hosted model behind a feature flag
-- Add `docker_inspect` / `docker_exec` tools with tighter allow-lists
+- Add `docker_inspect` / `docker_exec` more tools with tighter allow-lists
 - Stream agent responses token-by-token in the REPL
 - Wrap in a small FastAPI service for a Slack/Teams bot front end
+- Adding remote Docker context support (Docker's own DOCKER_HOST / contexts feature lets you point the CLI at a remote daemon over SSH)
 
 ---
 

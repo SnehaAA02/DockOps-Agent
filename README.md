@@ -1,6 +1,6 @@
 # DockOps Agent
 
-![CI](https://github.com/YOUR_USERNAME/dockops-agent/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/SnehaAA02/dockops-agent/actions/workflows/ci.yml/badge.svg)
 
 A local, LLM-powered assistant for inspecting and managing Docker containers
 through natural language, built on LangChain and a locally-hosted Ollama
@@ -155,10 +155,3 @@ green with no setup required on your end.
 
 ---
 
-### For your resume
-
-> Built a local LLM agent (LangChain + Ollama/Qwen2.5) that manages Docker
-> containers via natural language, with six validated tool integrations,
-> injection-safe subprocess execution, environment-based configuration, and
-> a mocked unit test suite — designed for portability across dev/CI
-> environments.
